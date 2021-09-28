@@ -51,14 +51,22 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign({ user }, "chat-cice");
-    return res.status(200).json({ token, userId: user._id });
+    return res.status(200).json({ token, userId: user._id, admin: user.admin });
 
   } catch (_) {
     return res.status(409).json({ error: "There was an error validating the user" });
   }
 };
 
-const deleteuser = (req, res) => {};
+const deleteUser = async (req, res) => {
+  try{
+    const {id} = req.params;
+    await models.user.findByIdAndRemove(id); 
+		return res.json(true);
+  }catch(_){
+    return res.status(409).json(false);
+  }
+};
 
 const all = async (req, res) => {
   try {
@@ -73,4 +81,5 @@ module.exports = {
   register,
   login,
   all,
+  deleteUser
 };
