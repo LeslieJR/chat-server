@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-const dbname = 'chat-app'
+const uri = process.env.MONGODB_URI;
 const options = {
   useNewUrlParser: true, 
   useUnifiedTopology: true
 }
 
-mongoose.connect('mongodb://localhost/'+dbname, options)
+mongoose.connect(uri, options)
   .then(() => {
     console.log('Connected to the DB')
   })
